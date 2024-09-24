@@ -13,7 +13,6 @@ public class MainPage {
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-
     public static final By QUESTION_1 = By.xpath(
         "//div[@id='accordion__heading-0']");
     public static final By ANSWER_1 = By.xpath(
@@ -47,11 +46,18 @@ public class MainPage {
     public static final By ANSWER_8 = By.xpath(
         "//p[contains(text(),'Да, обязательно. Всем самокатов!')]");
 
+    private final By orderButtonTop = By.xpath(
+        "//button[@class='Button_Button__ra12g']");
+    private final By orderButtonBottom = By.xpath(
+        "//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+
+    private final By cookieField = By.className("App_CookieText__1sbqp");
+    private final By cookieButton = By.id("rcc-confirm-button");
+
 
     public MainPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(3));
-
     }
 
     public MainPage open() {
@@ -71,10 +77,31 @@ public class MainPage {
         return this;
     }
 
-    public boolean isAnswerVisible(By answeLocator) {
-        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(answeLocator));
+    public boolean isAnswerVisible(By answerLocator) {
+        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
         return answer.isDisplayed();
     }
+
+    // кнокпка заказа в хэдере
+    public void clickOrderButtonTop() {
+        WebElement orderButton = wait.until(ExpectedConditions.elementToBeClickable(orderButtonTop));
+        orderButton.click();
+    }
+
+    // кнокпка заказа со страницы
+    public MainPage clickOrderButtonBottom() {
+        WebElement orderButton = wait.until(ExpectedConditions.elementToBeClickable(orderButtonBottom));
+        orderButton.click();
+        return this;
+    }
+
+    public void closeCookieWindow() {
+        if (webDriver.findElement(cookieField).isDisplayed()) {
+            webDriver.findElement(cookieButton).click();
+        }
+    }
 }
+
+
 
 

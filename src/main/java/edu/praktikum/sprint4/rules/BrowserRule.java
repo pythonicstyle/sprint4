@@ -1,8 +1,5 @@
 package edu.praktikum.sprint4.rules;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
-
-import java.time.Duration;
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,9 +19,11 @@ public class BrowserRule extends ExternalResource {
             webDriver = new ChromeDriver();
         }
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.of(3, SECONDS));
+//        WebDriver webDriver = new ChromeDriver();
+//        WebDriver webDriver = new FirefoxDriver();
         String url = "https://qa-scooter.praktikum-services.ru/";
         webDriver.get(url);
+
     }
 
     protected void after() {
