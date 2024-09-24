@@ -1,5 +1,7 @@
 package edu.praktikum.sprint4;
 
+import static edu.praktikum.sprint4.constants.Constants.ERRORMESSAGE;
+import static edu.praktikum.sprint4.constants.Constants.*;
 import static org.junit.Assert.assertTrue;
 
 import edu.praktikum.sprint4.pom.MainPage;
@@ -10,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-
 
 
 @RunWith(Parameterized.class)
@@ -28,17 +29,17 @@ public class DropdownFaqCheck {
     public BrowserRule browserRule = new BrowserRule();
 
     @Parameterized.Parameters
-    public static Object[][] getCredentials() {
-        return new Object[][]{
-            { MainPage.QUESTION_1, MainPage.ANSWER_1 },
-            { MainPage.QUESTION_2, MainPage.ANSWER_2 },
-            { MainPage.QUESTION_3, MainPage.ANSWER_3 },
-            { MainPage.QUESTION_4, MainPage.ANSWER_4 },
-            { MainPage.QUESTION_5, MainPage.ANSWER_5 },
-            { MainPage.QUESTION_6, MainPage.ANSWER_6 },
-            { MainPage.QUESTION_7, MainPage.ANSWER_7 },
-            { MainPage.QUESTION_8, MainPage.ANSWER_8 },
-        };
+    public static Object[][] getTestData() {
+        return new Object[][] {
+            { QUESTION_1, ANSWER_1 },
+            { QUESTION_2, ANSWER_2 },
+            { QUESTION_3, ANSWER_3 },
+            { QUESTION_4, ANSWER_4 },
+            { QUESTION_5, ANSWER_5 },
+            { QUESTION_6, ANSWER_6 },
+            { QUESTION_7, ANSWER_7 },
+            { QUESTION_8, ANSWER_8 },
+            };
     }
 
     @Test
@@ -47,12 +48,9 @@ public class DropdownFaqCheck {
         MainPage mainPage = new MainPage(browserRule.getWebDriver());
 
         mainPage.scrollPage(buttonLocator)
-                .clickQuestionButton(buttonLocator);
+            .clickQuestionButton(buttonLocator);
 
-        assertTrue(
-            "Ответ на вопрос не отображается.",
-            mainPage.isAnswerVisible(answerLocator)
-        );
+        assertTrue(ERRORMESSAGE, mainPage.isAnswerVisible(answerLocator));
     }
 
 }

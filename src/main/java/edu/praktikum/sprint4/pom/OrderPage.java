@@ -2,7 +2,6 @@ package edu.praktikum.sprint4.pom;
 
 import java.time.Duration;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,36 +12,34 @@ public class OrderPage {
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-    // Локаторы для первой страницы заказа
+    // Локаторы для полей первой страницы заказа
     private final By firstNameField = By.xpath("//input[@placeholder='* Имя']");
     private final By lastNameField = By.xpath("//input[@placeholder='* Фамилия']");
     private final By deliverAddressField = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
     private final By metroStationField = By.xpath("//input[@placeholder='* Станция метро']");
-    private final By metroStationValue = By.xpath("//button[@value='1']");
     private final By phoneField = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
-//    private final By nextButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Далее']");
+
+    // Кнопка перехода на следующую страницу формы заказа
     private final By nextButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
 
-
-    // Локаторы для второй страницы заказа
-    private final By submitButton = By.xpath("//button[contains(text(), 'Создать')]");
+    // Локаторы для полей второй страницы заказа
     private final By dateToDeliverfield = By.xpath("//input[@placeholder='* Когда привезти самокат']");
-    private final By chooseDateButton = By.xpath("//div[@aria-label='Choose понедельник, 23-е сентября 2024 г.']");
     private final By rentalPeriodField = By.xpath("//div[@class='Dropdown-placeholder']");
-    private final By chooseRentalPeriodButton = By.xpath("//div[@class='Dropdown-option' and text()='пятеро суток']");
-    private final By chooseScooterColorButton = By.xpath("//input[@id='black']");
 
-    private final By orderButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    private final By confirmOrderWindow = By.xpath("//div[@class='Order_ModalHeader__3FDaJ']");
-    private final By confirmOrderButton = By.xpath("//button[contains(text(),'Да')]");
+    // Кнопка "Заказать" на странице заказа
+    private final By orderButton = By.xpath(
+        "//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать']");
 
-    private final By successOrderWindow = By.className("Order_ModalHeader__3FDaJ");
-    private final By successOrderInfo = By.className("Order_Text__2broi");
+    // Локатор для модального окна с подтверждением заказа
+    private final By confirmOrderWindow = By.xpath(
+        "//div[@class='Order_ModalHeader__3FDaJ' and text()='Хотите оформить заказ?']");
 
+    // Кнопка "Подтвердить" в модальном окне подтверждении заказа
+    private final By confirmOrderButton = By.xpath(
+        "//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
 
-
-    private By successMessage = By.id("success-message");
-
+    // Локатор для модального окна с успешным оформлением заказа
+    private final By successOrderMessage = By.className("Order_ModalHeader__3FDaJ");
 
 
     public OrderPage(WebDriver webDriver) {
@@ -50,56 +47,65 @@ public class OrderPage {
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(3));
     }
 
-    public void fillOrderFormPage1NameFields(String firstName, String lastName) {
+    public OrderPage fillOrderFormPage1NameFields(String firstName, String lastName) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField));
         webDriver.findElement(firstNameField).sendKeys(firstName);
         webDriver.findElement(lastNameField).sendKeys(lastName);
+        return this;
     }
 
-    public void fillOrderFormPage1DeliverAddressField(String deliveryAddress) {
+    public OrderPage fillOrderFormPage1DeliverAddressField(String deliveryAddress) {
         webDriver.findElement(deliverAddressField).sendKeys(deliveryAddress);
+        return this;
     }
 
-    public void fillOrderFormPage1MetroStationField() {
+    public OrderPage fillOrderFormPage1MetroStationField(By metro) {
         webDriver.findElement(metroStationField).click();
-        webDriver.findElement(metroStationValue).click();
+        webDriver.findElement(metro).click();
+        return this;
     }
 
-    public void fillOrderFormPage1PhoneField(String phone) {
+    public OrderPage fillOrderFormPage1PhoneField(String phone) {
         webDriver.findElement(phoneField).sendKeys(phone);
+        return this;
     }
 
-    public void clickNextButton() {
+    public OrderPage clickNextButton() {
         webDriver.findElement(nextButton).click();
+        return this;
     }
 
-    public void fillDateToDeliverField() {
+    public OrderPage fillOrderFormPage2DateToDeliverField(By deliveryDate) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(dateToDeliverfield));
         webDriver.findElement(dateToDeliverfield).click();
-        webDriver.findElement(chooseDateButton).click();
+        webDriver.findElement(deliveryDate).click();
+        return this;
     }
 
-    public void fillRentalPeriodField() {
+    public OrderPage fillOrderFormPage2RentalPeriodField(By rentalPeriod) {
         webDriver.findElement(rentalPeriodField).click();
-        webDriver.findElement(chooseRentalPeriodButton).click();
+        webDriver.findElement(rentalPeriod).click();
+        return this;
     }
 
-    public void clickScooterColorButton() {
-        webDriver.findElement(chooseScooterColorButton).click();
+    public OrderPage fillOrderFormPage2ScooterColorButton(By scooterColor) {
+        webDriver.findElement(scooterColor).click();
+        return this;
     }
 
-    public void clickCreateOrderButton() {
+    public OrderPage clickCreateOrderButton() {
         WebElement order = wait.until(ExpectedConditions.elementToBeClickable(orderButton));
         order.click();
+        return this;
     }
 
     public void confirmOrder() {
-        webDriver.findElement(confirmOrderWindow).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(confirmOrderWindow));
         webDriver.findElement(confirmOrderButton).click();
     }
 
-    public boolean isSuccessMessageVisible() {
-        WebElement successMessage = wait.until(ExpectedConditions.elementToBeClickable(successOrderWindow));
-        return webDriver.findElement(successOrderWindow).isDisplayed();
+    public String getSuccessMessageText() {
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(successOrderMessage));
+        return successMessage.getText();
     }
 }

@@ -1,5 +1,8 @@
 package edu.praktikum.sprint4.rules;
 
+import static edu.praktikum.sprint4.constants.Constants.BROWSER;
+import static edu.praktikum.sprint4.constants.Constants.URL;
+
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,23 +14,19 @@ public class BrowserRule extends ExternalResource {
     private WebDriver webDriver;
 
     protected void before() {
-        String browser = System.getProperty("browser");
 
-        if ("firefox".equals(browser)) {
-            webDriver = new FirefoxDriver();
-        } else {
+        if ("chrome".equals(BROWSER)) {
             webDriver = new ChromeDriver();
+        } else {
+            webDriver = new FirefoxDriver();
         }
-
-//        WebDriver webDriver = new ChromeDriver();
-//        WebDriver webDriver = new FirefoxDriver();
-        String url = "https://qa-scooter.praktikum-services.ru/";
-        webDriver.get(url);
-
+        webDriver.get(URL);
     }
 
     protected void after() {
-        webDriver.quit();
+        if (webDriver != null) {
+            webDriver.quit();
+        }
     }
 
     public WebDriver getWebDriver() {
