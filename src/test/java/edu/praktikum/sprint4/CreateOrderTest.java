@@ -10,6 +10,7 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 
 import static edu.praktikum.sprint4.constants.Constants.*;
+import static edu.praktikum.sprint4.pom.OrderPage.*;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -47,24 +48,24 @@ public class CreateOrderTest {
     public static Object[][] getTestData() {
         return new Object[][] {
             {
-                FIRSTNAME1,
-                LASTNAME1,
-                ADDRESS1,
-                PHONE1,
-                METROSTATIONVALUECERKIZOVSKAYA,
-                CHOOSEDELIVERYDATE1BUTTON,
-                CHOOSERENTALPERIOD5DAYS,
-                SCOOTERCOLORBLACK
+                FIRSTNAME_1,
+                LASTNAME_1,
+                ADDRESS_1,
+                PHONE_1,
+                METRO_STATION_CERKIZOVSKAYA,
+                DELIVERY_DATE_1_BUTTON,
+                RENTAL_PERIOD_5_DAYS,
+                SCOOTER_COLOR_BLACK
             },
             {
-                FIRSTNAME2,
-                LASTNAME2,
-                ADDRESS2,
-                PHONE2,
-                METROSTATIONVALUEOKTYABRSKAYA,
-                CHOOSEDELIVERYDATE2BUTTON,
-                CHOOSERENTALPERIOD1DAY,
-                SCOOTERCOLORGREY
+                FIRSTNAME_2,
+                LASTNAME_2,
+                ADDRESS_2,
+                PHONE_2,
+                METRO_STATION_OKTYABRSKAYA,
+                DELIVERY_DATE_2_BUTTON,
+                RENTAL_PERIOD_1_DAY,
+                SCOOTER_COLOR_GREY
             },
         };
     }
@@ -73,8 +74,8 @@ public class CreateOrderTest {
     public void testOrderFlowTopButton() {
 
         MainPage mainPage = new MainPage(browserRule.getWebDriver());
-        mainPage.closeCookieWindow();
-        mainPage.clickOrderButtonTop();
+        mainPage.closeCookieWindow()
+                .clickOrderButtonTop();
 
         OrderPage orderPage = new OrderPage(browserRule.getWebDriver());
         orderPage.fillOrderFormPage1NameFields(firstName, lastName)
@@ -84,11 +85,11 @@ public class CreateOrderTest {
             .clickNextButton()
             .fillOrderFormPage2DateToDeliverField(deliveryDate)
             .fillOrderFormPage2RentalPeriodField(rentalPeriod)
-            .fillOrderFormPage2ScooterColorButton(scooterColor)
+            .fillOrderFormPage2ScooterColorField(scooterColor)
             .clickCreateOrderButton()
             .confirmOrder();
 
-        assertTrue(ERRORMESSAGE, orderPage.getSuccessMessageText().contains(SUCCESSMESSAGE));
+        assertTrue(ERROR_MESSAGE, orderPage.getSuccessMessageText().contains(SUCCESS_MESSAGE));
     }
 
 
@@ -97,7 +98,7 @@ public class CreateOrderTest {
 
         MainPage mainPage = new MainPage(browserRule.getWebDriver());
         mainPage.closeCookieWindow()
-            .clickOrderButtonBottom();
+                .clickOrderButtonBottom();
 
         OrderPage orderPage = new OrderPage(browserRule.getWebDriver());
         orderPage.fillOrderFormPage1NameFields(firstName, lastName)
@@ -107,10 +108,10 @@ public class CreateOrderTest {
             .clickNextButton()
             .fillOrderFormPage2DateToDeliverField(deliveryDate)
             .fillOrderFormPage2RentalPeriodField(rentalPeriod)
-            .fillOrderFormPage2ScooterColorButton(scooterColor)
+            .fillOrderFormPage2ScooterColorField(scooterColor)
             .clickCreateOrderButton()
             .confirmOrder();
 
-        assertTrue(ERRORMESSAGE, orderPage.getSuccessMessageText().contains(SUCCESSMESSAGE));
+        assertTrue(ERROR_MESSAGE, orderPage.getSuccessMessageText().contains(SUCCESS_MESSAGE));
     }
 }

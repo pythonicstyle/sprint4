@@ -23,7 +23,7 @@ public class OrderPage {
     private final By nextButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
 
     // Локаторы для полей второй страницы заказа
-    private final By dateToDeliverfield = By.xpath("//input[@placeholder='* Когда привезти самокат']");
+    private final By dateToDeliveryfield = By.xpath("//input[@placeholder='* Когда привезти самокат']");
     private final By rentalPeriodField = By.xpath("//div[@class='Dropdown-placeholder']");
 
     // Кнопка "Заказать" на странице заказа
@@ -40,6 +40,20 @@ public class OrderPage {
 
     // Локатор для модального окна с успешным оформлением заказа
     private final By successOrderMessage = By.className("Order_ModalHeader__3FDaJ");
+
+    // Локаторы для нахождения тестовых данных на странице заказа
+    public static final By METRO_STATION_CERKIZOVSKAYA = By.xpath("//button[@value='2']");
+    public static final By DELIVERY_DATE_1_BUTTON = By.xpath(
+        "//div[@aria-label='Choose понедельник, 23-е сентября 2024 г.']");
+    public static final By RENTAL_PERIOD_5_DAYS = By.xpath(
+        "//div[@class='Dropdown-option' and text()='пятеро суток']");
+    public static final By SCOOTER_COLOR_BLACK = By.xpath("//input[@id='black']");
+
+    public static final By METRO_STATION_OKTYABRSKAYA = By.xpath("//button[@value='104']");
+    public static final By DELIVERY_DATE_2_BUTTON = By.xpath(
+        "//div[@aria-label='Choose суббота, 5-е октября 2024 г.']");
+    public static final By RENTAL_PERIOD_1_DAY = By.xpath("//div[@class='Dropdown-option' and text()='сутки']");
+    public static final By SCOOTER_COLOR_GREY = By.xpath("//input[@id='grey']");
 
 
     public OrderPage(WebDriver webDriver) {
@@ -76,8 +90,8 @@ public class OrderPage {
     }
 
     public OrderPage fillOrderFormPage2DateToDeliverField(By deliveryDate) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(dateToDeliverfield));
-        webDriver.findElement(dateToDeliverfield).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(dateToDeliveryfield));
+        webDriver.findElement(dateToDeliveryfield).click();
         webDriver.findElement(deliveryDate).click();
         return this;
     }
@@ -88,7 +102,7 @@ public class OrderPage {
         return this;
     }
 
-    public OrderPage fillOrderFormPage2ScooterColorButton(By scooterColor) {
+    public OrderPage fillOrderFormPage2ScooterColorField(By scooterColor) {
         webDriver.findElement(scooterColor).click();
         return this;
     }

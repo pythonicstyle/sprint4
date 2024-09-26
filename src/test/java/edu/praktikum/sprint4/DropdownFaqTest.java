@@ -1,7 +1,7 @@
 package edu.praktikum.sprint4;
 
-import static edu.praktikum.sprint4.constants.Constants.ERRORMESSAGE;
-import static edu.praktikum.sprint4.constants.Constants.*;
+import static edu.praktikum.sprint4.constants.Constants.ERROR_MESSAGE;
+import static edu.praktikum.sprint4.pom.MainPage.*;
 import static org.junit.Assert.assertTrue;
 
 import edu.praktikum.sprint4.pom.MainPage;
@@ -15,12 +15,12 @@ import org.openqa.selenium.By;
 
 
 @RunWith(Parameterized.class)
-public class DropdownFaqCheck {
+public class DropdownFaqTest {
 
     private final By buttonLocator;
     private final By answerLocator;
 
-    public DropdownFaqCheck(By buttonLocator, By answerLocator) {
+    public DropdownFaqTest(By buttonLocator, By answerLocator) {
         this.buttonLocator = buttonLocator;
         this.answerLocator = answerLocator;
     }
@@ -50,7 +50,7 @@ public class DropdownFaqCheck {
         mainPage.scrollPage(buttonLocator)
             .clickQuestionButton(buttonLocator);
 
-        assertTrue(ERRORMESSAGE, mainPage.isAnswerVisible(answerLocator));
+        assertTrue(ERROR_MESSAGE, mainPage.isAnswerVisible(answerLocator));
     }
 
 }
